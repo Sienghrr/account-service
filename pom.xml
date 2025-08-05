@@ -30,6 +30,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+			<!--property spring cloud-->
 		<spring-cloud.version>2021.0.8</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -40,10 +41,7 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 	</dependency>
 
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>-->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -55,10 +53,13 @@
 		</dependency>
 		<!--<dependency> <groupId>org.postgresql</groupId> <artifactId>postgresql</artifactId> 
 			<scope>runtime</scope> </dependency>-->
+
+		<!--spring cloud dependency-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -76,6 +77,8 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+<!--	we use dependency management in order to ez manage spring cloud version -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

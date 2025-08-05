@@ -19,24 +19,24 @@ import com.sieng.bank.account.services.AccountService;
 public class AccountController {
 	
 	@Autowired
-	private AccountService AccountService;
+	private AccountService accountService;
 	@Autowired
-	private AccountMapper AccountMapper;
+	private AccountMapper accountMapper;
 	
 	@PostMapping
 	public ResponseEntity<?> saveAccount(@RequestBody AccountDTO dto){
-		Account Account = AccountMapper.toAccount(dto);
-		Account = AccountService.save(Account);
+		Account Account = accountMapper.toAccount(dto);
+		Account = accountService.save(Account);
 		return ResponseEntity.ok(Account);
 	}
 	
 	@GetMapping
 	public ResponseEntity<?> getAccounts(){
-		return ResponseEntity.ok(AccountService.getAccounts());
+		return ResponseEntity.ok(accountService.getAccounts());
 	}
 	@GetMapping("{accountId}")
 	public ResponseEntity<?> getAccountById(@PathVariable Long accountId){
-		return ResponseEntity.ok(AccountService.getById(accountId));
+		return ResponseEntity.ok(accountService.getById(accountId));
 	}
 
 }
