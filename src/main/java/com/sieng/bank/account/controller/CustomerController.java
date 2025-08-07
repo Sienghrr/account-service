@@ -5,6 +5,9 @@ import com.sieng.bank.account.dto.CustomerDetailDTO;
 import com.sieng.bank.account.dto.LoanResponseDTO;
 import com.sieng.bank.account.services.client.CardFeignClient;
 import com.sieng.bank.account.services.client.LoanFeignClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,21 +53,43 @@ public class CustomerController {
 		return ResponseEntity.ok(customerService.getById(customerId));
 	}
 
+	//@CircuitBreaker(name = "customerDetailSupport",fallbackMethod = "getCustomerDetailDefault")
+	@Retry(name = "retryCustomerDetail",fallbackMethod = "getCustomerDetailDefault")
 	@GetMapping("customerDetail/{customerId}")
 	public ResponseEntity<CustomerDetailDTO> getCustomerDetail(@PathVariable Long customerId){
+		System.out.println("----------Account Service Retry---------------");
 		CustomerDetailDTO dto = new CustomerDetailDTO();
 		Customer customer = customerService.getById(customerId);
 		if(customer == null){
 			throw new RuntimeException("No customer found with this id");
 		}
 		CustomerDTO customerDTO = customerMapper.toCustomerDTO(customer);
-
 		List<LoanResponseDTO> loanInfo = loanFeignClient.getLoanInfo(customerId);
 		List<CardResponseDTO> cardInfo = cardFeignClient.getCardInfo(customerId);
 		dto.setCustomer(customerDTO);
 		dto.setCards(cardInfo);
 		dto.setLoans(loanInfo);
 		return ResponseEntity.ok(dto);
+	}
+
+	public ResponseEntity<CustomerDetailDTO> getCustomerDetailDefault(@PathVariable Long customerId,Throwable e){
+		CustomerDetailDTO dto = new CustomerDetailDTO();
+		Customer customer = customerService.getById(customerId);
+		if(customer == null){
+			throw new RuntimeException("No customer found with this id");
+		}
+		CustomerDTO customerDTO = customerMapper.toCustomerDTO(customer);
+		dto.setCustomer(customerDTO);
+		return ResponseEntity.ok(dto);
+	}
+
+	@GetMapping("/sayHello")
+	@RateLimiter(name = "sayHelloLimiter", fallbackMethod = "sayHi")
+	public String sayHello() {
+		return "Hello, welcome to SiengBank";
+	}
+	public String sayHi(Throwable t) {
+		return "Hi, welcome to SiengBank";
 	}
 
 }

@@ -35,6 +35,27 @@
 	</properties>
 	<dependencies>
 
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot2</artifactId>
+		</dependency>
+
+	<!--for circuit breaker-->
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-circuitbreaker</artifactId>
+		</dependency>
+	<!--for rate limit rq at a specific time-->
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-timelimiter</artifactId>
+		</dependency>
+	<!--this for fallback mechanic-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 	<!--for communicate between services-->
 	<dependency>
 		<groupId>org.springframework.cloud</groupId>
