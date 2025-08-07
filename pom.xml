@@ -35,6 +35,13 @@
 	</properties>
 	<dependencies>
 
+	<!--for communicate between services-->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-openfeign</artifactId>
+	</dependency>
+
+
 		<!-- use for monitoring and managing application -->
 	<dependency>
 			<groupId>org.springframework.boot</groupId>
