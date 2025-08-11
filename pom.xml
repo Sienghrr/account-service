@@ -32,8 +32,16 @@
 		<java.version>17</java.version>
 			<!--property spring cloud-->
 		<spring-cloud.version>2021.0.8</spring-cloud.version>
+		<otelVersion>1.27.0</otelVersion>
 	</properties>
 	<dependencies>
+<!--		this is for tempo-->
+		<dependency>
+			<groupId>io.opentelemetry.javaagent</groupId>
+			<artifactId>opentelemetry-javaagent</artifactId>
+			<version>${otelVersion}</version>
+			<scope>runtime</scope>
+		</dependency>
 
 <!--		this for monitoring metric(cpu usage, uptime ...)-->
 		<dependency>
@@ -113,10 +121,10 @@
 			<scope>test</scope>
 		</dependency>
 	<!--this used for refresh only one service and trigger all the services to refresh-->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-bus-amqp</artifactId>-->
+<!--		</dependency>-->
 
 	<!--for register Accountservice in eurekaserver-->
 		<dependency>

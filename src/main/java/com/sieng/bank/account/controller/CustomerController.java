@@ -55,7 +55,8 @@ public class CustomerController {
 	@GetMapping("customerDetail/{customerId}")
 	public ResponseEntity<CustomerDetailDTO> getCustomerDetail(
 			@RequestHeader("siengbank-correlation-id") String correlationId, @PathVariable Long customerId){
-		log.debug("Correlation id found {}",correlationId);
+		//log.debug("Correlation id found {}",correlationId);
+		log.debug("fetch getCustomerDetail start");
 		CustomerDetailDTO dto = new CustomerDetailDTO();
 		Customer customer = customerService.getById(customerId);
 		if(customer == null){
@@ -67,6 +68,7 @@ public class CustomerController {
 		dto.setCustomer(customerDTO);
 		dto.setCards(cardInfo);
 		dto.setLoans(loanInfo);
+		log.debug("fetch getCustomerDetail end");
 		return ResponseEntity.ok(dto);
 	}
 
@@ -81,13 +83,5 @@ public class CustomerController {
 		return ResponseEntity.ok(dto);
 	}
 
-	@GetMapping("/sayHello")
-	@RateLimiter(name = "sayHelloLimiter", fallbackMethod = "sayHi")
-	public String sayHello() {
-		return "Hello, welcome to SiengBank";
-	}
-	public String sayHi(Throwable t) {
-		return "Hi, welcome to SiengBank";
-	}
 
 }
