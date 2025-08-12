@@ -19,15 +19,26 @@ spring:
       hibernate:
         ddl-auto: update
       show-sql: true
-    h2:
-      console:
-        enabled: true
+  h2:
+   console:
+      enabled: true
+  cloud:
+    function:
+      destination: updateCustomerCommunication
+    stream:
+      bindings:
+        sendCommunication-out-0:
+          destination: send-communication
+        updateCustomerCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
 
 #  rabbitmq:
 #    host: localhost
 #    port: 5672
 #    username: guest
 #    password: guest
+#    connection-timeout: 10s
 
 management:
   endpoints:

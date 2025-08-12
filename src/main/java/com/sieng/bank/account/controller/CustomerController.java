@@ -1,8 +1,6 @@
 package com.sieng.bank.account.controller;
 
-import com.sieng.bank.account.dto.CardResponseDTO;
-import com.sieng.bank.account.dto.CustomerDetailDTO;
-import com.sieng.bank.account.dto.LoanResponseDTO;
+import com.sieng.bank.account.dto.*;
 import com.sieng.bank.account.services.client.CardFeignClient;
 import com.sieng.bank.account.services.client.LoanFeignClient;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.sieng.bank.account.dto.CustomerDTO;
 import com.sieng.bank.account.entity.Customer;
 import com.sieng.bank.account.mapper.CustomerMapper;
 import com.sieng.bank.account.services.CustomerService;
@@ -40,7 +37,6 @@ public class CustomerController {
 		customer = customerService.save(customer);
 		return ResponseEntity.ok(customer);
 	}
-	
 	@GetMapping
 	public ResponseEntity<?> getCustomers(){
 		return ResponseEntity.ok(customerService.getCustomers());
